@@ -1,0 +1,35 @@
+server:
+  port: ${SERVER_PORT:1313}
+spring:
+  application:
+    name: test_finance
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/test_finance?stringtype=unspecified}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    baseline-version: 1
+    sql-migration-prefix: V
+    sql-migration-suffixes: .sql
+    baseline-on-migrate: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        format_sql: true
+        non_contextual_creation: true
+  sql:
+    init:
+      platform: postgres
+      mode: ${INIT_MODE:always}
+
+jwt:
+  secret: ${JWT_SECRET:YO2gpzjW2sGyp2fcEi785h5JCpuVA7tN}
