@@ -1,26 +1,27 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:13
+    container_name: mypostgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: test_finance
+    ports:
+      - "5432:5432"
+
   app:
     build: .
     container_name: test-finance-app
     ports:
       - "1313:1313"
     environment:
-      - SPRING_PROFILES_ACTIVE=local
+      - DB_URL:jdbc=postgresql://mypostgres:5432/test_finance?stringtype=unspecified
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     depends_on:
       - postgres
 
-  postgres:
-    image: postgres:13
-    container_name: my-postgres
-    restart: always
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: test_finance
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
